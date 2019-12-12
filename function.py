@@ -127,8 +127,8 @@ def draw(chess,screen):
 	imageO = pygame.image.load('images/O.bmp')
 	imageXr = pygame.image.load('images/Xr.bmp')
 	imageOr = pygame.image.load('images/Or.bmp')
-	image_frame = pygame.image.load('images/frame.gif')
-	image_big_frame = pygame.image.load('images/big_frame.gif')
+	image_frame = pygame.image.load('images/a.gif')
+	image_big_frame = pygame.image.load('images/b.gif')
 
 	#绘制普通棋子
 	for position2 in chess.O2:
