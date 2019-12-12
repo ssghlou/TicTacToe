@@ -9,7 +9,7 @@ def run_game():
     screen = pygame.display.set_mode((500,600)) #500*600的屏幕
     pygame.display.set_caption('Chess')         #标题
     
-    image = pygame.image.load('images/bg.bmp') #载入界面
+    image = pygame.image.load('images/233.bmp') #载入界面
     chess = Chess()
     retract_button = Button(screen,'Retract',200,100)   #悔棋按钮
     replay_button = Button(screen,'Replay',200,50)      #重玩按钮
