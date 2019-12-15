@@ -1,6 +1,8 @@
 # TicTacToe
 一种进阶版的井字棋。
 
+基于pygame开发，运行前需安装pygame，然后直接双击TicTacToe.py就可以运行。
+
 ## 规则：
 
 1.双人对战，分为O方和X方，X方先下，O方后下，轮流下棋。
