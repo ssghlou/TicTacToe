@@ -1,9 +1,9 @@
+
 # encoding:utf-8
 
 import pygame
-import function as f
-import time
 import winsound     #用作播放点击错误的声音
+
 class Chess():
     def __init__(self):
         self.O1 = []  # 1为相对坐标

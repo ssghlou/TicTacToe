@@ -1,7 +1,6 @@
 # encoding:utf-8
 import pygame.font
 
-
 class Button():
     def __init__(self, screen, msg, rect_x, rect_y):
         self.screen = screen
