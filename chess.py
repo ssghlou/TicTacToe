@@ -22,9 +22,9 @@ class Chess():
                     self.X1.append(position1)
                     self.X2.append(position2)
             else:
-                winsound.PlaySound("Wrong.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)          #异步播放点击错误的音乐
+                winsound.PlaySound("images/Wrong.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)          #异步播放点击错误的音乐
         else:
-            winsound.PlaySound("Wrong.wav", winsound.SND_FILENAME | winsound.SND_ASYNC)
+            winsound.PlaySound("images/Wrong.wav", winsound.SND_FILENAME | winsound.SND_ASYNC)
 
     def retract(self):
         if len(self.X1) > len(self.O1):
