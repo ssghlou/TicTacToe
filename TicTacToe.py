@@ -4,8 +4,6 @@ import function as f
 from chess import Chess
 from button import Button
 from settings import Settings
-import sys
-sys.dont_write_bytecode = True              #用于不生成编译文件
 def run_game():
     pygame.init()   #初始化
     st = Settings()

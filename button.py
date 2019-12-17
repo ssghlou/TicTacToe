@@ -1,7 +1,4 @@
 import pygame.font
-import sys
-
-sys.dont_write_bytecode = True
 class Button():
     def __init__(self,screen,msg,rect_x,rect_y):
         self.screen = screen
