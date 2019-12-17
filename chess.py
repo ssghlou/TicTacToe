@@ -13,17 +13,18 @@ class Chess():
 
     def save(self, position1, position2):
         '''保存坐标'''
-        if position1 not in self.X1 and position1 not in self.O1:
+        if position1 not in self.X1 and position1 not in self.O1:       #判断是否落在之前下过的地方
             if self.check_chess_position(position1):           #判断是否落在应该下的地方
-                if len(self.X1) > len(self.O1):
-                    self.O1.append(position1)
+                if len(self.X1) > len(self.O1):                #判断该次所下的子为哪方所下
+                    self.O1.append(position1)                  #将该次所下的子的坐标存入列表
                     self.O2.append(position2)
                 else:
                     self.X1.append(position1)
                     self.X2.append(position2)
             else:
                 winsound.PlaySound("Wrong.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)          #异步播放点击错误的音乐
-
+        else:
+            winsound.PlaySound("Wrong.wav", winsound.SND_FILENAME | winsound.SND_ASYNC)
 
     def retract(self):
         if len(self.X1) > len(self.O1):

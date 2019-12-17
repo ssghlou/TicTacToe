@@ -28,22 +28,23 @@ def check_position(mouse_x, mouse_y, chess):
     a = ''
     position1 = ''
     position2 = []
-
-    if mouse_x >= center_x - 142.5 and mouse_x <= center_x - 52.5:
+    '''大九宫行列'''
+    if mouse_x >= center_x - 142.5 and mouse_x <= center_x - 52.5:             #大第一列
         a += '1'
-    elif mouse_x >= center_x - 45 and mouse_x <= center_x + 45:
+    elif mouse_x >= center_x - 45 and mouse_x <= center_x + 45:                #大第二列
         a += '2'
-    elif mouse_x >= center_x + 52.5 and mouse_x <= center_x + 142.5:
+    elif mouse_x >= center_x + 52.5 and mouse_x <= center_x + 142.5:           #大第三列
         a += '3'
 
-    if mouse_y >= center_y - 142.5 and mouse_y <= center_y - 52.5:
+    if mouse_y >= center_y - 142.5 and mouse_y <= center_y - 52.5:             #大第一行
         a += '4'
-    elif mouse_y >= center_y - 45 and mouse_y <= center_y + 45:
+    elif mouse_y >= center_y - 45 and mouse_y <= center_y + 45:                #大第二行
         a += '5'
-    elif mouse_y >= center_y + 52.5 and mouse_y <= center_y + 142.5:
+    elif mouse_y >= center_y + 52.5 and mouse_y <= center_y + 142.5:           #大第三行
         a += '6'
 
     if len(a) > 1:
+        '''小九宫行列对应'''                       #a[0]为列数 a[1]为行数    position1记录该格子在81个格子内的坐标
         if a[0] == '1':
             if mouse_x >= center_x - 142.5 and mouse_x <= center_x - 113.5:
                 position1 += '1'
