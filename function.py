@@ -1,8 +1,9 @@
+# encoding:utf-8
 import pygame
 import sys
 
-import chess
 
+import chess
 center_x = 250
 center_y = 400
 
