@@ -1,8 +1,6 @@
 import pygame
 import sys
 
-import chess
-
 def check_keydown(chess,screen,st,retract_button,replay_button):
     '''检测按键'''
     for event in pygame.event.get():
@@ -39,68 +37,68 @@ def check_position(mouse_x,mouse_y,chess,st):
         if a[0] == '1':
             if mouse_x >= st.center_x - 142.5 and mouse_x <= st.center_x - 113.5:
                 position1 += '1'
-                position2.append(str(st.center_x - 142))
+                position2.append(st.center_x - 142)
             elif mouse_x >= st.center_x - 112 and mouse_x <= st.center_x - 83:
                 position1 += '2'
-                position2.append(str(st.center_x - 111.5))
+                position2.append(st.center_x - 111.5)
             elif mouse_x >= st.center_x - 81.5 and mouse_x <= st.center_x - 52.5:
                 position1 += '3'
-                position2.append(str(st.center_x - 81))
+                position2.append(st.center_x - 81)
             
         elif a[0] == '2' :
             if mouse_x >= st.center_x - 45 and mouse_x <= st.center_x - 16:
                 position1 += '4'
-                position2.append(str(st.center_x - 44.5))
+                position2.append(st.center_x - 44.5)
             elif mouse_x >= st.center_x - 14.5 and mouse_x <= st.center_x + 14.5:
                 position1 += '5'
-                position2.append(str(st.center_x - 14))
+                position2.append(st.center_x - 14)
             elif mouse_x >= st.center_x + 16 and mouse_x <= st.center_x + 45:
                 position1 += '6'
-                position2.append(str(st.center_x + 16.5))
+                position2.append(st.center_x + 16.5)
                 
         elif a[0] == '3':
             if mouse_x >= st.center_x + 52.5 and mouse_x <= st.center_x + 81.5:
                 position1 += '7'
-                position2.append(str(st.center_x + 53))
+                position2.append(st.center_x + 53)
             elif mouse_x >= st.center_x + 83 and mouse_x <= st.center_x + 112:
                 position1 += '8'
-                position2.append(str(st.center_x + 83.5))
+                position2.append(st.center_x + 83.5)
             elif mouse_x >= st.center_x + 113.5 and mouse_x <= st.center_x + 142.5:
                 position1 += '9'
-                position2.append(str(st.center_x + 114))
+                position2.append(st.center_x + 114)
         
         if a[1] == '4':
             if mouse_y >= st.center_y - 142.5 and mouse_y <= st.center_y - 113.5:
                 position1 += '1'
-                position2.append(str(st.center_y - 142))
+                position2.append(st.center_y - 142)
             elif mouse_y >= st.center_y - 112 and mouse_y <= st.center_y - 83:
                 position1 += '2'
-                position2.append(str(st.center_y - 111.5))
+                position2.append(st.center_y - 111.5)
             elif mouse_y >= st.center_y - 81.5 and mouse_y <= st.center_y - 52.5:
                 position1 += '3'
-                position2.append(str(st.center_y - 81))
+                position2.append(st.center_y - 81)
             
         elif a[1] == '5' :
             if mouse_y >= st.center_y - 45 and mouse_y <= st.center_y - 16:
                 position1 += '4'
-                position2.append(str(st.center_y - 44.5))
+                position2.append(st.center_y - 44.5)
             elif mouse_y >= st.center_y - 14.5 and mouse_y <= st.center_y + 14.5:
                 position1 += '5'
-                position2.append(str(st.center_y - 14))
+                position2.append(st.center_y - 14)
             elif mouse_y >= st.center_y + 16 and mouse_y <= st.center_y + 45:
                 position1 += '6'
-                position2.append(str(st.center_y + 16.5))
+                position2.append(st.center_y + 16.5)
                 
         elif a[1] == '6':
             if mouse_y >= st.center_y + 52.5 and mouse_y <= st.center_y + 81.5:
                 position1 += '7'
-                position2.append(str(st.center_y + 53))
+                position2.append(st.center_y + 53)
             elif mouse_y >= st.center_y + 83 and mouse_y <= st.center_y + 112:
                 position1 += '8'
-                position2.append(str(st.center_y + 83.5))
+                position2.append(st.center_y + 83.5)
             elif mouse_y >= st.center_y + 113.5 and mouse_y <= st.center_y + 142.5:
                 position1 += '9'
-                position2.append(str(st.center_y + 114))
+                position2.append(st.center_y + 114)
 
         if len(position1) > 1 and len(position2) > 1:
             chess.save(position1,position2)
@@ -126,15 +124,15 @@ def draw(chess,screen,st):
 
 	#绘制普通棋子
 	for position2 in chess.O2:
-		screen.blit(imageO,(float(position2[0]),float(position2[1])))
+		screen.blit(imageO,(position2[0],position2[1]))
 	for position2 in chess.X2:
-		screen.blit(imageX,(float(position2[0]),float(position2[1])))
+		screen.blit(imageX,(position2[0],position2[1]))
 	
 	#绘制最后一颗棋子
 	if len(chess.X1) > len(chess.O1) :
-		screen.blit(imageXr,(float(chess.X2[-1][0]),float(chess.X2[-1][1])))
+		screen.blit(imageXr,(chess.X2[-1][0],chess.X2[-1][1]))
 	elif len(chess.X1) == len(chess.O1) and len(chess.X1) > 0:
-		screen.blit(imageOr,(float(chess.O2[-1][0]),float(chess.O2[-1][1])))
+		screen.blit(imageOr,(chess.O2[-1][0],chess.O2[-1][1]))
 	
 	#绘制下棋区域
 	last_position = ''  #上一个棋的位置，若无，则空
