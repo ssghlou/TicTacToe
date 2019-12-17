@@ -1,5 +1,7 @@
 import pygame
+import sys
 
+sys.dont_write_bytecode = True
 class Chess():
     def __init__(self):
         self.O1 = []  #1为相对坐标

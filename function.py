@@ -2,7 +2,7 @@ import pygame
 import sys
 
 import chess
-
+sys.dont_write_bytecode = True          #用于不生成编译文件
 def check_keydown(chess,screen,st,retract_button,replay_button):
     '''检测按键'''
     for event in pygame.event.get():
