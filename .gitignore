@@ -1,0 +1,4 @@
+*.pyc
+# Default ignored files
+/.idea
+*.xml

@@ -1,8 +1,10 @@
+# encoding:utf-8
 import pygame
 
 import function as f
 from chess import Chess
 from button import Button
+
 from settings import Settings
 
 def run_game():
