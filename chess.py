@@ -57,4 +57,13 @@ class BigChess():
         self.BigX1 = []
         self.BigX2 = []
 
-    # def check_big_chess(self):
+    def check_big_chess(self,chess):
+        x1 = [[] for i in range(9)]
+        o1 = [[] for i in range(9)]
+        
+    
+    
+    
+    
+    
+    
