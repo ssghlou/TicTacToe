@@ -2,7 +2,7 @@
 import pygame
 
 import function as f
-from chess import Chess
+from chess import Chess,BigChess
 from button import Button
 
 from settings import Settings
@@ -15,6 +15,7 @@ def run_game():
     
     image = pygame.image.load('images/chessboard.bmp') #载入棋盘
     chess = Chess()
+    bigchess = BigChess()
     retract_button = Button(screen,'Retract',st.retract_button_position[0],
         st.retract_button_position[1])      #悔棋按钮
     replay_button = Button(screen,'Replay',st.replay_button_position[0],
@@ -24,8 +25,8 @@ def run_game():
         screen.fill(st.bg_color)      #背景色
         screen.blit(image,st.top_left_corner)#在棋盘左上角位置绘制棋盘，注意跟棋盘的中心位置有关
         
-        f.check_keydown(chess,screen,st,retract_button,replay_button)#检测鼠标按动
-        f.draw(chess,screen,st)    #绘制棋子，框
+        f.check_keydown(chess,bigchess,screen,st,retract_button,replay_button)#检测鼠标按动
+        f.draw(chess,bigchess,screen,st)    #绘制棋子，框
         
         retract_button.draw_button()    #绘制悔棋按钮
         replay_button.draw_button()     #绘制重玩按钮

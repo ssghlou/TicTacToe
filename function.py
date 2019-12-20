@@ -5,7 +5,7 @@ import sys
 import chess
 import settings as st
 
-def check_keydown(chess, screen, st, retract_button, replay_button):
+def check_keydown(chess,bigchess, screen, st, retract_button, replay_button):
     '''检测按键'''
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -13,11 +13,11 @@ def check_keydown(chess, screen, st, retract_button, replay_button):
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            check_position(mouse_x, mouse_y, chess, st)
+            check_position(mouse_x, mouse_y, chess,bigchess, st)
             check_button(screen, retract_button, replay_button,
-                         chess, mouse_x, mouse_y)
+                         chess,bigchess, mouse_x, mouse_y)
 
-def check_position(mouse_x, mouse_y, chess, st):
+def check_position(mouse_x, mouse_y, chess,bigchess, st):
     '''产生点击的坐标'''
     a = ''
     position1 = ''
@@ -104,24 +104,29 @@ def check_position(mouse_x, mouse_y, chess, st):
                 position2.append(st.center_y + 114)
 
         if len(position1) > 1 and len(position2) > 1:
-            chess.save(position1, position2)
+            chess.save(bigchess,position1, position2)
+            bigchess.check_big_chess(chess)
 
-def check_button(screen, retract_button, replay_button, chess, mouse_x, mouse_y):
+def check_button(screen, retract_button, replay_button, chess,bigchess, mouse_x, mouse_y):
     '''检查是否点击按钮'''
     if retract_button.rect.collidepoint(mouse_x, mouse_y):
         chess.retract()
+        bigchess.check_big_chess(chess)
     elif replay_button.rect.collidepoint(mouse_x, mouse_y):
         chess.O1.clear()
         chess.O2.clear()
         chess.X1.clear()
         chess.X2.clear()
+        bigchess.check_big_chess(chess)
 
-def draw(chess, screen, st):
+def draw(chess,bigchess, screen, st):
     '''绘制图形'''
     imageX = pygame.image.load('images/X.bmp')
     imageO = pygame.image.load('images/O.bmp')
     imageXr = pygame.image.load('images/Xr.bmp')
     imageOr = pygame.image.load('images/Or.bmp')
+    imageBigX = pygame.image.load('images/bigX.bmp')
+    imageBigO = pygame.image.load('images/bigO.bmp')
     image_frame = pygame.image.load('images/frame.gif')
     image_big_frame = pygame.image.load('images/big_frame.gif')
 
@@ -136,6 +141,16 @@ def draw(chess, screen, st):
         screen.blit(imageXr,(chess.X2[-1][0], chess.X2[-1][1]))
     elif len(chess.X1) == len(chess.O1) and len(chess.X1) > 0:
         screen.blit(imageOr,(chess.O2[-1][0], chess.O2[-1][1]))
+        
+    #绘制大棋
+    for u in bigchess.bigX:
+        x = st.top_left_corner[0]+7.5+(u[0]-1)*97.5
+        y = st.top_left_corner[1]+7.5+(u[1]-1)*97.5
+        screen.blit(imageBigX,(x,y))
+    for u in bigchess.bigO:
+        x = st.top_left_corner[0]+7.5+(u[0]-1)*97.5
+        y = st.top_left_corner[1]+7.5+(u[1]-1)*97.5
+        screen.blit(imageBigO,(x,y))
 
     # 绘制下棋区域
     last_position = ''  # 上一个棋的位置，若无，则空
@@ -146,8 +161,11 @@ def draw(chess, screen, st):
     if last_position:
         x = (int(last_position[0]) - 1) % 3 + 1  # x,y为上一个棋对应的宫的相对位置
         y = (int(last_position[1]) - 1) % 3 + 1
-        x_position = st.top_left_corner[0] + (x - 1) * 97.5  # 这两个变量为绘制的框的绝对位置
-        y_position = st.top_left_corner[1] + (y - 1) * 97.5  # 97.5为棋盘的宫的宽度加上粗边的宽度
-        screen.blit(image_frame, (x_position, y_position))
+        if [x,y] in bigchess.bigX or [x,y] in bigchess.bigO:
+            screen.blit(image_big_frame, (st.top_left_corner[0], st.top_left_corner[1]))
+        else:
+            x_position = st.top_left_corner[0] + (x - 1) * 97.5  # 这两个变量为绘制的框的绝对位置
+            y_position = st.top_left_corner[1] + (y - 1) * 97.5  # 97.5为棋盘的宫的宽度加上粗边的宽度
+            screen.blit(image_frame, (x_position, y_position))
     else:
         screen.blit(image_big_frame, (st.top_left_corner[0], st.top_left_corner[1]))
