@@ -66,15 +66,15 @@ class BigChess():
             '''查找大棋'''
             if [2,2] in u:
                 if [1,1] in u and [3,3] in u:return True
-                elif [3,1] in u and [1,3] in u:return True
-                elif [1,2] in u and [3,2] in u:return True
-                elif [2,1] in u and [2,3] in u:return True
-            elif [1,1] in u:
+                if [3,1] in u and [1,3] in u:return True
+                if [1,2] in u and [3,2] in u:return True
+                if [2,1] in u and [2,3] in u:return True
+            if [1,1] in u:
                 if [2,1] in u and [3,1] in u:return True
-                elif [1,2] in u and [1,3] in u:return True
-            elif [3,3] in u:
+                if [1,2] in u and [1,3] in u:return True
+            if [3,3] in u:
                 if [3,1] in u and [3,2] in u:return True
-                elif [1,3] in u and [2,3] in u:return True
+                if [1,3] in u and [2,3] in u:return True
             return False
         #xh(n)为第n行，每一项的第n个（从1开始）为第n列
         xh1=[[] for i in range(3)];xh2=[[] for i in range(3)];xh3=[[] for i in range(3)]
@@ -86,11 +86,13 @@ class BigChess():
                     eval('xh'+str((y-1)//3+1))[(x-1)//3].append(transform([x,y]))
                 elif str(x)+str(y) in chess.O1:
                     eval('oh'+str((y-1)//3+1))[(x-1)//3].append(transform([x,y]))
+        print(xh3)
+        print(chess.X1)
         for i in range(1,4):
             for j in range(1,4):
                 if findbig(eval('xh'+str(j))[i-1]):self.bigX.append([i,j])
                 if findbig(eval('oh'+str(j))[i-1]):self.bigO.append([i,j])
-    
+        print(self.bigX)
     
     
     
