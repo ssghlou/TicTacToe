@@ -63,7 +63,7 @@ class BigChess():
             while u[1]>3:u[1]-=3
             return u
         def findbig(u):
-            '''查找大棋'''
+            '''判断小棋是否连成一条线'''
             if [2,2] in u:
                 if [1,1] in u and [3,3] in u:return True
                 if [3,1] in u and [1,3] in u:return True
@@ -86,14 +86,8 @@ class BigChess():
                     eval('xh'+str((y-1)//3+1))[(x-1)//3].append(transform([x,y]))
                 elif str(x)+str(y) in chess.O1:
                     eval('oh'+str((y-1)//3+1))[(x-1)//3].append(transform([x,y]))
-        print(xh3)
-        print(chess.X1)
         for i in range(1,4):
             for j in range(1,4):
                 if findbig(eval('xh'+str(j))[i-1]):self.bigX.append([i,j])
                 if findbig(eval('oh'+str(j))[i-1]):self.bigO.append([i,j])
-        print(self.bigX)
-    
-    
-    
-    
+

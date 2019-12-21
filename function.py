@@ -1,6 +1,7 @@
 # encoding:utf-8
 import pygame
 import sys
+import pygame.font
 
 import chess
 import settings as st
@@ -13,9 +14,11 @@ def check_keydown(chess,bigchess, screen, st, retract_button, replay_button):
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            check_position(mouse_x, mouse_y, chess,bigchess, st)
+            if st.game_active:
+                check_position(mouse_x, mouse_y, chess,bigchess, st)
+            stop(chess,bigchess,st)
             check_button(screen, retract_button, replay_button,
-                         chess,bigchess, mouse_x, mouse_y)
+                         chess,bigchess,st, mouse_x, mouse_y)
 
 def check_position(mouse_x, mouse_y, chess,bigchess, st):
     '''产生点击的坐标'''
@@ -107,17 +110,19 @@ def check_position(mouse_x, mouse_y, chess,bigchess, st):
             chess.save(bigchess,position1, position2)
             bigchess.check_big_chess(chess)
 
-def check_button(screen, retract_button, replay_button, chess,bigchess, mouse_x, mouse_y):
+def check_button(screen, retract_button, replay_button, chess,bigchess,st, mouse_x, mouse_y):
     '''检查是否点击按钮'''
     if retract_button.rect.collidepoint(mouse_x, mouse_y):
         chess.retract()
         bigchess.check_big_chess(chess)
+        st.game_active = True; st.win = 0
     elif replay_button.rect.collidepoint(mouse_x, mouse_y):
         chess.O1.clear()
         chess.O2.clear()
         chess.X1.clear()
         chess.X2.clear()
         bigchess.check_big_chess(chess)
+        st.game_active = True; st.win = 0
 
 def draw(chess,bigchess, screen, st):
     '''绘制图形'''
@@ -152,7 +157,7 @@ def draw(chess,bigchess, screen, st):
         y = st.top_left_corner[1]+7.5+(u[1]-1)*97.5
         screen.blit(imageBigO,(x,y))
 
-    # 绘制下棋区域
+    #绘制下棋区域
     last_position = ''  # 上一个棋的位置，若无，则空
     if len(chess.X1) > len(chess.O1):
         last_position = chess.X1[-1]
@@ -169,3 +174,59 @@ def draw(chess,bigchess, screen, st):
             screen.blit(image_frame, (x_position, y_position))
     else:
         screen.blit(image_big_frame, (st.top_left_corner[0], st.top_left_corner[1]))
+        
+    #显示输赢的文字
+    def draw_text(text,text_color,font,st,screen):
+        textobj = font.render(text,True,text_color,st.bg_color)
+        text_rect = textobj.get_rect()
+        text_rect.center = center
+        screen.blit(textobj,text_rect)
+    if st.game_active == False:
+        font = pygame.font.SysFont(None, 60)
+        text_color = (255, 255, 255)
+        center = (250,190)
+        if st.win==0:draw_text('Draw!',text_color,font,st,screen)
+        elif st.win==1:draw_text('X wins!',text_color,font,st,screen)
+        elif st.win==2:draw_text('O wins!',text_color,font,st,screen)
+
+def stop(chess,bigchess,st):
+    '''判断游戏是否结束'''
+    def find(u):
+        '''判断大棋是否连成一条线'''
+        if [2,2] in u:
+            if [1,1] in u and [3,3] in u:return True
+            if [3,1] in u and [1,3] in u:return True
+            if [1,2] in u and [3,2] in u:return True
+            if [2,1] in u and [2,3] in u:return True
+        if [1,1] in u:
+            if [2,1] in u and [3,1] in u:return True
+            if [1,2] in u and [1,3] in u:return True
+        if [3,3] in u:
+            if [3,1] in u and [3,2] in u:return True
+            if [1,3] in u and [2,3] in u:return True
+        return False
+    if find(bigchess.bigX):
+        st.game_active = False
+        st.win = 1
+    elif find(bigchess.bigO):
+        st.game_active = False
+        st.win = 2
+    else:
+        if len(bigchess.bigX)+len(bigchess.bigO)==9:
+            st.game_active = False
+        else:
+            num = [0 for i in range(9)]  #存放每个小九宫格内的棋子数量，若被大棋占领，则为9
+            flag = [False for i in range(9)]    #是否被大棋占领
+            for i in bigchess.bigX:num[(i[1]-1)*3+i[0]-1]=9;flag[(i[1]-1)*3+i[0]-1]=True
+            for i in bigchess.bigO:num[(i[1]-1)*3+i[0]-1]=9;flag[(i[1]-1)*3+i[0]-1]=True
+            for i in chess.X1:
+                x = (int(i[0])-1)//3+1; y = (int(i[1])-1)//3+1
+                if not flag[(y-1)*3+x-1]:num[(y-1)*3+x-1]+=1
+            for i in chess.O1:
+                x = (int(i[0])-1)//3+1; y = (int(i[1])-1)//3+1
+                if not flag[(y-1)*3+x-1]:num[(y-1)*3+x-1]+=1
+            if sum(num)==81:st.game_active = False
+            else:game_active = True
+    
+
+    

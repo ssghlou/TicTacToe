@@ -26,7 +26,7 @@ def run_game():
         screen.blit(image,st.top_left_corner)#在棋盘左上角位置绘制棋盘，注意跟棋盘的中心位置有关
         
         f.check_keydown(chess,bigchess,screen,st,retract_button,replay_button)#检测鼠标按动
-        f.draw(chess,bigchess,screen,st)    #绘制棋子，框
+        f.draw(chess,bigchess,screen,st)    #绘制棋子，框等
         
         retract_button.draw_button()    #绘制悔棋按钮
         replay_button.draw_button()     #绘制重玩按钮
