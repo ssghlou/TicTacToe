@@ -2,6 +2,7 @@
 import pygame
 import sys
 import pygame.font
+import winsound     #用作播放点击错误的声音
 
 import chess
 import settings as st
@@ -116,6 +117,7 @@ def check_button(screen, retract_button, replay_button, chess,bigchess,st, mouse
         chess.retract()
         bigchess.check_big_chess(chess)
         st.game_active = True; st.win = 0
+        winsound.PlaySound("images/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
     elif replay_button.rect.collidepoint(mouse_x, mouse_y):
         chess.O1.clear()
         chess.O2.clear()
@@ -123,6 +125,7 @@ def check_button(screen, retract_button, replay_button, chess,bigchess,st, mouse
         chess.X2.clear()
         bigchess.check_big_chess(chess)
         st.game_active = True; st.win = 0
+        winsound.PlaySound("images/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
 
 def draw(chess,bigchess, screen, st):
     '''绘制图形'''
