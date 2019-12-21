@@ -10,4 +10,4 @@ class Settings():
         self.top_left_corner = (self.center_x-self.chessboard_width//2,
             self.center_y-self.chessboard_width//2) #棋盘左上角的坐标
         self.game_active = True     #若游戏结束，一方获胜，则为False
-        self.win = 0      #0为没有一方获胜获胜，1为X方获胜，2为O方获胜
+        self.win = 0      #0为没有一方获胜，1为X方获胜，2为O方获胜
