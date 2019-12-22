@@ -27,8 +27,8 @@ ___
 效果展示部分：
 ---
 
-![github](https://github.com/ssghlou/TicTacToe/raw/master/images/p0.png)   ![github](https://github.com/ssghlou/TicTacToe/raw/master/images/p1.png)
-   ![github](https://github.com/ssghlou/TicTacToe/raw/master/images/p2.png)        
+![github](https://github.com/ssghlou/TicTacToe/raw/master/images/p1.png)   ![github](https://github.com/ssghlou/TicTacToe/raw/master/images/p2.png)
+   ![github](https://github.com/ssghlou/TicTacToe/raw/master/images/p3.png)        
 
 #### 目前已实现功能：
 
