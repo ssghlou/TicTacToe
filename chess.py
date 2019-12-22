@@ -19,11 +19,11 @@ class Chess():
                 else:
                     self.X1.append(position1)
                     self.X2.append(position2)
-                winsound.PlaySound("images/chess.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)        #异步播放点击落子的音乐
+                winsound.PlaySound("materials/chess.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)        #异步播放点击落子的音乐
             else:
-                winsound.PlaySound("images/Wrong.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)          #异步播放点击错误的音乐
+                winsound.PlaySound("materials/Wrong.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)          #异步播放点击错误的音乐
         else:
-            winsound.PlaySound("images/Wrong.wav", winsound.SND_FILENAME | winsound.SND_ASYNC)
+            winsound.PlaySound("materials/Wrong.wav", winsound.SND_FILENAME | winsound.SND_ASYNC)
 
     def retract(self):
         if len(self.X1) > len(self.O1):

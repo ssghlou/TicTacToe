@@ -13,7 +13,7 @@ def run_game():
     screen = pygame.display.set_mode(st.setmode) #500*600的屏幕
     pygame.display.set_caption('Chess')         #标题
     
-    image = pygame.image.load('images/chessboard.bmp') #载入棋盘
+    image = pygame.image.load('materials/chessboard.bmp') #载入棋盘
     chess = Chess()
     bigchess = BigChess()
     retract_button = Button(screen,'Retract',st.retract_button_position[0],

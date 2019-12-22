@@ -117,7 +117,7 @@ def check_button(screen, retract_button, replay_button, chess,bigchess,st, mouse
         chess.retract()
         bigchess.check_big_chess(chess)
         st.game_active = True; st.win = 0
-        winsound.PlaySound("images/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
+        winsound.PlaySound("materials/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
     elif replay_button.rect.collidepoint(mouse_x, mouse_y):
         chess.O1.clear()
         chess.O2.clear()
@@ -125,18 +125,18 @@ def check_button(screen, retract_button, replay_button, chess,bigchess,st, mouse
         chess.X2.clear()
         bigchess.check_big_chess(chess)
         st.game_active = True; st.win = 0
-        winsound.PlaySound("images/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
+        winsound.PlaySound("materials/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
 
 def draw(chess,bigchess, screen, st):
     '''绘制图形'''
-    imageX = pygame.image.load('images/X.bmp')
-    imageO = pygame.image.load('images/O.bmp')
-    imageXr = pygame.image.load('images/Xr.bmp')
-    imageOr = pygame.image.load('images/Or.bmp')
-    imageBigX = pygame.image.load('images/bigX.bmp')
-    imageBigO = pygame.image.load('images/bigO.bmp')
-    image_frame = pygame.image.load('images/frame.gif')
-    image_big_frame = pygame.image.load('images/big_frame.gif')
+    imageX = pygame.image.load('materials/X.bmp')
+    imageO = pygame.image.load('materials/O.bmp')
+    imageXr = pygame.image.load('materials/Xr.bmp')
+    imageOr = pygame.image.load('materials/Or.bmp')
+    imageBigX = pygame.image.load('materials/bigX.bmp')
+    imageBigO = pygame.image.load('materials/bigO.bmp')
+    image_frame = pygame.image.load('materials/frame.gif')
+    image_big_frame = pygame.image.load('materials/big_frame.gif')
 
     # 绘制普通棋子
     for position2 in chess.O2:
