@@ -44,7 +44,10 @@ class Chess():
         if last_position:
             x = (int(last_position[0]) - 1) % 3 + 1  # x,y为上一个棋对应的宫的相对位置
             y = (int(last_position[1]) - 1) % 3 + 1
-            if [x,y] in bigchess.bigX or [x,y] in bigchess.bigO:flag=True
+            if [x,y] in bigchess.bigX or [x,y] in bigchess.bigO:
+                x_ = (int(position1[0])-1)//3+1;y_ = (int(position1[1])-1)//3+1
+                if [x_,y_] in bigchess.bigX or [x_,y_] in bigchess.bigO:flag=False
+                else:flag=True
             elif x == ((int(position1[0]) - 1) // 3 + 1) and y == ((int(position1[1]) - 1) // 3 + 1):
                 flag = True
         else:
