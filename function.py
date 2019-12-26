@@ -3,11 +3,12 @@ import pygame
 import sys
 import pygame.font
 import winsound     #用作播放点击错误的声音
+from random import choice
 
 import chess
 import settings as st
 
-def check_keydown(chess,bigchess, screen, st, retract_button, replay_button):
+def check_keydown(chess,bigchess,windows, screen, st, retract_button, replay_button):
     '''检测按键'''
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -18,7 +19,7 @@ def check_keydown(chess,bigchess, screen, st, retract_button, replay_button):
             if st.game_active:
                 check_position(mouse_x, mouse_y, chess,bigchess, st)
             stop(chess,bigchess,st)
-            check_button(screen, retract_button, replay_button,
+            check_button(screen, retract_button, replay_button,windows,
                          chess,bigchess,st, mouse_x, mouse_y)
 
 def check_position(mouse_x, mouse_y, chess,bigchess, st):
@@ -111,23 +112,37 @@ def check_position(mouse_x, mouse_y, chess,bigchess, st):
             chess.save(bigchess,position1, position2)
             bigchess.check_big_chess(chess)
 
-def check_button(screen, retract_button, replay_button, chess,bigchess,st, mouse_x, mouse_y):
+def check_button(screen,retract_button,replay_button,windows,chess,bigchess,st,mouse_x, mouse_y):
     '''检查是否点击按钮'''
     if retract_button.rect.collidepoint(mouse_x, mouse_y):
-        chess.retract()
-        bigchess.check_big_chess(chess)
-        st.game_active = True; st.win = 0
-        winsound.PlaySound("materials/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
+        if not st.active_windows:
+            chess.retract()
+            bigchess.check_big_chess(chess)
+            st.game_active = True; st.win = -1
+            winsound.PlaySound("materials/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
     elif replay_button.rect.collidepoint(mouse_x, mouse_y):
-        chess.O1.clear()
-        chess.O2.clear()
-        chess.X1.clear()
-        chess.X2.clear()
-        bigchess.check_big_chess(chess)
-        st.game_active = True; st.win = 0
-        winsound.PlaySound("materials/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
+        if not st.active_windows:
+            st.active_windows = True
+            st.game_active = False
+            winsound.PlaySound("materials/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
+    elif windows.msg2_button.rect.collidepoint(mouse_x, mouse_y):
+        if st.active_windows:
+            st.game_active = True
+            st.active_windows = False
+            chess.O1.clear()
+            chess.O2.clear()
+            chess.X1.clear()
+            chess.X2.clear()
+            bigchess.check_big_chess(chess)
+            winsound.PlaySound("materials/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
+    elif windows.msg3_button.rect.collidepoint(mouse_x, mouse_y):
+        if st.active_windows:
+            st.game_active = True
+            st.active_windows = False
+            stop(chess,bigchess,st)
+            winsound.PlaySound("materials/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
 
-def draw(chess,bigchess, screen, st):
+def draw(chess,bigchess, screen,windows, st):
     '''绘制图形'''
     imageX = pygame.image.load('materials/X.bmp')
     imageO = pygame.image.load('materials/O.bmp')
@@ -184,13 +199,17 @@ def draw(chess,bigchess, screen, st):
         text_rect = textobj.get_rect()
         text_rect.center = center
         screen.blit(textobj,text_rect)
-    if st.game_active == False:
+    if st.win>=0:
         font = pygame.font.SysFont(None, 60)
         text_color = (255, 255, 255)
         center = (250,190)
         if st.win==0:draw_text('Draw!',text_color,font,st,screen)
         elif st.win==1:draw_text('X wins!',text_color,font,st,screen)
         elif st.win==2:draw_text('O wins!',text_color,font,st,screen)
+        
+    #绘制重新开始提示界面
+    if st.active_windows:
+        windows.draw_windows()
 
 def stop(chess,bigchess,st):
     '''判断游戏是否结束'''
@@ -216,6 +235,7 @@ def stop(chess,bigchess,st):
         st.win = 2
     else:
         if len(bigchess.bigX)+len(bigchess.bigO)==9:
+            st.win = 0
             st.game_active = False
         else:
             num = [0 for i in range(9)]  #存放每个小九宫格内的棋子数量，若被大棋占领，则为9
@@ -228,8 +248,43 @@ def stop(chess,bigchess,st):
             for i in chess.O1:
                 x = (int(i[0])-1)//3+1; y = (int(i[1])-1)//3+1
                 if not flag[(y-1)*3+x-1]:num[(y-1)*3+x-1]+=1
-            if sum(num)==81:st.game_active = False
-            else:game_active = True
+            if sum(num)==81:
+                st.win = 0
+                st.game_active = False
+            else:
+                st.win = -1
+                game_active = True
+    
+# def ai(chess,bigchess,st):
+    # pos = [[str(x),str(y)] for x in range(1,10) for y in range(1,10)]
+    # if len(chess.X1)>len(chess.O1) and st.game_active:
+        # position1 = choice(pos)
+        # position1 = ''.join(position1)
+        # position2 = []
+        # if position1[0]=='1':position2.append(st.center_x - 142)
+        # elif position1[0]=='2':position2.append(st.center_x - 111.5)
+        # elif position1[0]=='3':position2.append(st.center_x - 81)
+        # elif position1[0]=='4':position2.append(st.center_x - 44.5)
+        # elif position1[0]=='5':position2.append(st.center_x - 14)
+        # elif position1[0]=='6':position2.append(st.center_x + 16.5)
+        # elif position1[0]=='7':position2.append(st.center_x + 53)
+        # elif position1[0]=='8':position2.append(st.center_x + 83.5)
+        # elif position1[0]=='9':position2.append(st.center_x + 114)
+        # if position1[1]=='1':position2.append(st.center_y - 142)
+        # elif position1[1]=='2':position2.append(st.center_y - 111.5)
+        # elif position1[1]=='3':position2.append(st.center_y - 81)
+        # elif position1[1]=='4':position2.append(st.center_y - 44.5)
+        # elif position1[1]=='5':position2.append(st.center_y - 14)
+        # elif position1[1]=='6':position2.append(st.center_y + 16.5)
+        # elif position1[1]=='7':position2.append(st.center_y + 53)
+        # elif position1[1]=='8':position2.append(st.center_y + 83.5)
+        # elif position1[1]=='9':position2.append(st.center_y + 114)
+        # chess.save(bigchess,position1, position2)
+        # bigchess.check_big_chess(chess)
     
 
-    
+
+
+
+
+
