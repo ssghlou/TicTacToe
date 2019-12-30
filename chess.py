@@ -82,7 +82,7 @@ class BigChess():
             return False
         #xh(n)为第n行，每一项的第n个（从1开始）为第n列
         xh1=[[] for i in range(3)];xh2=[[] for i in range(3)];xh3=[[] for i in range(3)]
-        oh1=[[] for i in range(9)];oh2=[[] for i in range(9)];oh3=[[] for i in range(9)]
+        oh1=[[] for i in range(3)];oh2=[[] for i in range(3)];oh3=[[] for i in range(3)]
         self.bigX = []; self.bigO = []
         for x in range(1,10):
             for y in range(1,10):

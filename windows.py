@@ -10,8 +10,8 @@ class Windows():
         self.bg_color = (20,40,150)
         self.font = pygame.font.SysFont(None, 60)
         self.rect = pygame.Rect(left,top,self.width, self.height)
-        self.msg2_button = Button(screen,msg2,200,300)
-        self.msg3_button = Button(screen,msg3,200,340)
+        self.msg2_button = Button(screen, (170,300,160,40),text='Yes')
+        self.msg3_button = Button(screen, (170,350,160,40),text='No')
         self.prep_msg(msg1)
         
     def prep_msg(self,msg1):

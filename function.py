@@ -13,14 +13,39 @@ def check_keydown(chess,bigchess,windows, screen, st, retract_button, replay_but
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-
-        elif event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             if st.game_active:
                 check_position(mouse_x, mouse_y, chess,bigchess, st)
             stop(chess,bigchess,st)
-            check_button(screen, retract_button, replay_button,windows,
-                         chess,bigchess,st, mouse_x, mouse_y)
+        if retract_button.check_mouse_event(event):
+            if not st.active_windows:
+                chess.retract()
+                bigchess.check_big_chess(chess)
+                st.game_active = True; st.win = -1
+                winsound.PlaySound("materials/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
+        elif replay_button.check_mouse_event(event):
+            if not st.active_windows:
+                st.active_windows = True
+                st.game_active = False
+                winsound.PlaySound("materials/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
+        elif windows.msg2_button.check_mouse_event(event):
+            if st.active_windows:
+                st.game_active = True
+                st.active_windows = False
+                st.win = -1
+                chess.O1.clear()
+                chess.O2.clear()
+                chess.X1.clear()
+                chess.X2.clear()
+                bigchess.check_big_chess(chess)
+                winsound.PlaySound("materials/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
+        elif windows.msg3_button.check_mouse_event(event):
+            if st.active_windows:
+                st.game_active = True
+                st.active_windows = False
+                stop(chess,bigchess,st)
+                winsound.PlaySound("materials/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
 
 def check_position(mouse_x, mouse_y, chess,bigchess, st):
     '''产生点击的坐标'''
@@ -112,36 +137,6 @@ def check_position(mouse_x, mouse_y, chess,bigchess, st):
             chess.save(bigchess,position1, position2)
             bigchess.check_big_chess(chess)
 
-def check_button(screen,retract_button,replay_button,windows,chess,bigchess,st,mouse_x, mouse_y):
-    '''检查是否点击按钮'''
-    if retract_button.rect.collidepoint(mouse_x, mouse_y):
-        if not st.active_windows:
-            chess.retract()
-            bigchess.check_big_chess(chess)
-            st.game_active = True; st.win = -1
-            winsound.PlaySound("materials/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
-    elif replay_button.rect.collidepoint(mouse_x, mouse_y):
-        if not st.active_windows:
-            st.active_windows = True
-            st.game_active = False
-            winsound.PlaySound("materials/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
-    elif windows.msg2_button.rect.collidepoint(mouse_x, mouse_y):
-        if st.active_windows:
-            st.game_active = True
-            st.active_windows = False
-            chess.O1.clear()
-            chess.O2.clear()
-            chess.X1.clear()
-            chess.X2.clear()
-            bigchess.check_big_chess(chess)
-            winsound.PlaySound("materials/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
-    elif windows.msg3_button.rect.collidepoint(mouse_x, mouse_y):
-        if st.active_windows:
-            st.game_active = True
-            st.active_windows = False
-            stop(chess,bigchess,st)
-            winsound.PlaySound("materials/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
-
 def draw(chess,bigchess, screen,windows, st):
     '''绘制图形'''
     imageX = pygame.image.load('materials/X.bmp')
@@ -202,7 +197,7 @@ def draw(chess,bigchess, screen,windows, st):
     if st.win>=0:
         font = pygame.font.SysFont(None, 60)
         text_color = (255, 255, 255)
-        center = (250,190)
+        center = (250,200)
         if st.win==0:draw_text('Draw!',text_color,font,st,screen)
         elif st.win==1:draw_text('X wins!',text_color,font,st,screen)
         elif st.win==2:draw_text('O wins!',text_color,font,st,screen)

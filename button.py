@@ -1,24 +1,66 @@
-# encoding:utf-8
-import pygame.font
+# -*- coding=utf-8 -*-
+
+'''参考了这篇文章：https://blog.csdn.net/zhangenter/article/details/89609946'''
+
+import threading
+import pygame
 
 class Button():
-    def __init__(self, screen, msg, rect_x, rect_y):
-        self.screen = screen
+    def __init__(self,parent,rect,text):
+        #self.screen = screen
+        self.parent = parent
+        self.bg_color = (225,225,225)
+        self.surface = parent.subsurface(rect)
+        self.x,self.y,self.width,self.height = rect
+        self._text = text
+        self.is_hover = False
+        self.is_press = False
+        self.init_font()
+    
+    def init_font(self):
+        font = pygame.font.SysFont('arial',28)
+        white = 100, 100, 100
+        self.textImage = font.render(self._text, True, white)
+        w, h = self.textImage.get_size()
+        self._tx = (self.width - w) / 2
+        self._ty = (self.height - h) / 2
 
-        self.width, self.height = 100, 30
-        self.button_color = (66, 66, 66)
-        self.text_color = (255, 255, 255)
-        self.font = pygame.font.SysFont(None, 30)
-
-        self.rect = pygame.Rect(rect_x, rect_y, self.width, self.height)
-        self.prep_msg(msg)
-
-    def prep_msg(self, msg):
-        self.msg_image = self.font.render(msg, True, self.text_color,
-                                          self.button_color)
-        self.msg_image_rect = self.msg_image.get_rect()
-        self.msg_image_rect.center = self.rect.center
-
+    def check_mouse_event(self,event):
+        x,y = pygame.mouse.get_pos()
+        if x > self.x and x < self.x + self.width and y > self.y and y < self.y + self.height:
+            self.is_hover = True
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                self.is_press = True
+                return False
+            if event.type == pygame.MOUSEBUTTONUP:
+                self.is_press = False
+                return True
+        else:
+            self.is_hover = False
+            if event.type == pygame.MOUSEBUTTONUP:
+                self.is_press = False
+            return False
+        
     def draw_button(self):
-        self.screen.fill(self.button_color, self.rect)
-        self.screen.blit(self.msg_image, self.msg_image_rect)
+        if self.is_press:
+            r,g,b = self.bg_color
+            k = 0.99
+            self.surface.fill((r*k, g*k, b*k))
+        else:
+            self.surface.fill(self.bg_color)
+        if self.is_hover:
+            pygame.draw.rect(self.surface, (0,0,0), (0,0,self.width,self.height), 1)
+            pygame.draw.rect(self.surface, (100,100,100), (0,0,self.width-1,self.height-1), 1)
+            layers = 5
+            r_step = (100-55)/layers
+            g_step = (100-55)/layers
+            for i in range(layers):
+                pygame.draw.rect(self.surface, (170+r_step*i, 205+g_step*i, 255), (i, i, self.width - 2 - i*2, self.height - 2 - i*2), 1)
+        else:
+            self.surface.fill(self.bg_color)
+            pygame.draw.rect(self.surface, (0,0,0), (0,0,self.width,self.height), 1)
+            pygame.draw.rect(self.surface, (100,100,100), (0,0,self.width-1,self.height-1), 1)
+            pygame.draw.rect(self.surface, self.bg_color, (0,0,self.width-2,self.height-2), 1)
+            
+        self.surface.blit(self.textImage, (self._tx, self._ty))
+                
