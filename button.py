@@ -50,7 +50,7 @@ class Button():
     def draw_button(self):
         if self.is_press:
             r,g,b = self.bg_color
-            k = 0.95
+            k = 0.97
             self.surface.fill((r*k, g*k, b*k))
         else:
             self.surface.fill(self.bg_color)
