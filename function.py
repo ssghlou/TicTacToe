@@ -76,7 +76,6 @@ def check_position(mouse_x, mouse_y, chess,bigchess, st):
             elif st.center_x - 81.5 <= mouse_x <= st.center_x - 52.5:
                 position1 += '3'
                 position2.append(st.center_x - 81)
-
         elif a[0] == '2':
             if st.center_x - 45 <= mouse_x <= st.center_x - 16:
                 position1 += '4'
@@ -87,7 +86,6 @@ def check_position(mouse_x, mouse_y, chess,bigchess, st):
             elif st.center_x + 16 <= mouse_x <= st.center_x + 45:
                 position1 += '6'
                 position2.append(st.center_x + 16.5)
-
         elif a[0] == '3':
             if st.center_x + 52.5 <= mouse_x <= st.center_x + 81.5:
                 position1 += '7'
@@ -98,6 +96,7 @@ def check_position(mouse_x, mouse_y, chess,bigchess, st):
             elif st.center_x + 113.5 <= mouse_x <= st.center_x + 142.5:
                 position1 += '9'
                 position2.append(st.center_x + 114)
+
         if a[1] == '4':
             if st.center_y - 142.5 <= mouse_y <= st.center_y - 113.5:
                 position1 += '1'
@@ -108,7 +107,6 @@ def check_position(mouse_x, mouse_y, chess,bigchess, st):
             elif st.center_y - 81.5 <= mouse_y <= st.center_y - 52.5:
                 position1 += '3'
                 position2.append(st.center_y - 81)
-
         elif a[1] == '5':
             if st.center_y - 45 <= mouse_y <= st.center_y - 16:
                 position1 += '4'
@@ -119,7 +117,6 @@ def check_position(mouse_x, mouse_y, chess,bigchess, st):
             elif st.center_y + 16 <= mouse_y <= st.center_y + 45:
                 position1 += '6'
                 position2.append(st.center_y + 16.5)
-
         elif a[1] == '6':
             if st.center_y + 52.5 <= mouse_y <= st.center_y + 81.5:
                 position1 += '7'
@@ -247,5 +244,4 @@ def stop(chess,bigchess,st):
             else:
                 st.win = -1
                 game_active = True
-
 

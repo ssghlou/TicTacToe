@@ -6,7 +6,6 @@ import pygame
 
 class Button():
     def __init__(self,parent,rect,text):
-        #self.screen = screen
         self.parent = parent
         self.bg_color = (225,225,225)
         self.surface = parent.subsurface(rect)
@@ -51,7 +50,7 @@ class Button():
     def draw_button(self):
         if self.is_press:
             r,g,b = self.bg_color
-            k = 0.99
+            k = 0.95
             self.surface.fill((r*k, g*k, b*k))
         else:
             self.surface.fill(self.bg_color)
