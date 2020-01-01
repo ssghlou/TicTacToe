@@ -28,9 +28,7 @@ def check_keydown(chess,bigchess,windows, screen, st, retract_button, replay_but
                 st.active_windows = True
                 st.game_active = False
                 winsound.PlaySound("materials/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
-        else:
-            retract_button.is_hover = False;retract_button.is_press = False
-            replay_button.is_hover = False;replay_button.is_press = False
+                replay_button.is_hover = False;replay_button.is_press = False
         if windows.msg2_button.check_mouse_event(event):
             if st.active_windows:
                 st.game_active = True
@@ -249,37 +247,5 @@ def stop(chess,bigchess,st):
             else:
                 st.win = -1
                 game_active = True
-    
-# def ai(chess,bigchess,st):
-    # pos = [[str(x),str(y)] for x in range(1,10) for y in range(1,10)]
-    # if len(chess.X1)>len(chess.O1) and st.game_active:
-        # position1 = choice(pos)
-        # position1 = ''.join(position1)
-        # position2 = []
-        # if position1[0]=='1':position2.append(st.center_x - 142)
-        # elif position1[0]=='2':position2.append(st.center_x - 111.5)
-        # elif position1[0]=='3':position2.append(st.center_x - 81)
-        # elif position1[0]=='4':position2.append(st.center_x - 44.5)
-        # elif position1[0]=='5':position2.append(st.center_x - 14)
-        # elif position1[0]=='6':position2.append(st.center_x + 16.5)
-        # elif position1[0]=='7':position2.append(st.center_x + 53)
-        # elif position1[0]=='8':position2.append(st.center_x + 83.5)
-        # elif position1[0]=='9':position2.append(st.center_x + 114)
-        # if position1[1]=='1':position2.append(st.center_y - 142)
-        # elif position1[1]=='2':position2.append(st.center_y - 111.5)
-        # elif position1[1]=='3':position2.append(st.center_y - 81)
-        # elif position1[1]=='4':position2.append(st.center_y - 44.5)
-        # elif position1[1]=='5':position2.append(st.center_y - 14)
-        # elif position1[1]=='6':position2.append(st.center_y + 16.5)
-        # elif position1[1]=='7':position2.append(st.center_y + 53)
-        # elif position1[1]=='8':position2.append(st.center_y + 83.5)
-        # elif position1[1]=='9':position2.append(st.center_y + 114)
-        # chess.save(bigchess,position1, position2)
-        # bigchess.check_big_chess(chess)
-    
-
-
-
-
 
 

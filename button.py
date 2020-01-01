@@ -2,7 +2,6 @@
 
 '''参考了这篇文章：https://blog.csdn.net/zhangenter/article/details/89609946'''
 
-import threading
 import pygame
 
 class Button():
