@@ -18,26 +18,26 @@ def check_keydown(chess,bigchess,windows, screen, st, retract_button, replay_but
             if st.game_active:
                 check_position(mouse_x, mouse_y, chess,bigchess, st)
             stop(chess,bigchess,st)
-        if retract_button.check_mouse_event(event):
-            if not st.active_windows:
+        if not st.active_windows:
+            if retract_button.check_mouse_event(event):
                 chess.retract()
                 bigchess.check_big_chess(chess)
                 st.game_active = True; st.win = -1
                 winsound.PlaySound("materials/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
-        elif replay_button.check_mouse_event(event):
-            if not st.active_windows:
+            elif replay_button.check_mouse_event(event):
                 st.active_windows = True
                 st.game_active = False
                 winsound.PlaySound("materials/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
-        elif windows.msg2_button.check_mouse_event(event):
+        else:
+            retract_button.is_hover = False;retract_button.is_press = False
+            replay_button.is_hover = False;replay_button.is_press = False
+        if windows.msg2_button.check_mouse_event(event):
             if st.active_windows:
                 st.game_active = True
                 st.active_windows = False
                 st.win = -1
-                chess.O1.clear()
-                chess.O2.clear()
-                chess.X1.clear()
-                chess.X2.clear()
+                chess.O1.clear();chess.O2.clear()
+                chess.X1.clear();chess.X2.clear()
                 bigchess.check_big_chess(chess)
                 winsound.PlaySound("materials/button.wav", winsound.SND_FILENAME|winsound.SND_ASYNC)       #异步播放点击按按钮的音乐
         elif windows.msg3_button.check_mouse_event(event):

@@ -16,6 +16,7 @@ class Button():
         self.is_hover = False
         self.is_press = False
         self.init_font()
+        self.mouse_pos = []
     
     def init_font(self):
         font = pygame.font.SysFont('arial',28)
@@ -29,17 +30,24 @@ class Button():
         x,y = pygame.mouse.get_pos()
         if x > self.x and x < self.x + self.width and y > self.y and y < self.y + self.height:
             self.is_hover = True
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                self.is_press = True
-                return False
-            if event.type == pygame.MOUSEBUTTONUP:
-                self.is_press = False
-                return True
         else:
             self.is_hover = False
-            if event.type == pygame.MOUSEBUTTONUP:
-                self.is_press = False
-            return False
+        #只有鼠标按下和鼠标松开的时候光标都在按钮范围内才触发按下事件
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            x_,y_ = pygame.mouse.get_pos()
+            if x_ > self.x and x_ < self.x + self.width and y_ > self.y and y_ < self.y + self.height:
+                self.is_press = True
+                self.mouse_pos = [True]
+            else:self.mouse_pos = [False]
+        if event.type == pygame.MOUSEBUTTONUP:
+            self.is_press = False
+            x_,y_ = pygame.mouse.get_pos()
+            if x_ > self.x and x_ < self.x + self.width and y_ > self.y and y_ < self.y + self.height and self.mouse_pos[-1]:
+                self.mouse_pos = []
+                return True
+            else:
+                self.mouse_pos = []
+                return False
         
     def draw_button(self):
         if self.is_press:
