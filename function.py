@@ -14,10 +14,14 @@ def check_keydown(chess,bigchess,windows, screen, st, retract_button, replay_but
         if event.type == pygame.QUIT:
             sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
-            mouse_x, mouse_y = pygame.mouse.get_pos()
-            if st.game_active:
-                check_position(mouse_x, mouse_y, chess,bigchess, st)
-            stop(chess,bigchess,st)
+            pressed_array = pygame.mouse.get_pressed()
+            for index in range(len(pressed_array)):
+                if pressed_array[index]:
+                    if index == 0:      #只响应鼠标左键单击
+                        mouse_x, mouse_y = pygame.mouse.get_pos()
+                        if st.game_active:
+                            check_position(mouse_x, mouse_y, chess,bigchess, st)
+                        stop(chess,bigchess,st)
         if not st.active_windows:
             if retract_button.check_mouse_event(event):
                 chess.retract()
@@ -174,7 +178,7 @@ def draw(chess,bigchess, screen,windows, st):
     if last_position:
         x = (int(last_position[0]) - 1) % 3 + 1  # x,y为上一个棋对应的宫的相对位置
         y = (int(last_position[1]) - 1) % 3 + 1
-        if [x,y] in bigchess.bigX or [x,y] in bigchess.bigO:
+        if chess.isfull(bigchess, x, y):
             screen.blit(image_big_frame, (st.top_left_corner[0], st.top_left_corner[1]))
         else:
             x_position = st.top_left_corner[0] + (x - 1) * 97.5  # 这两个变量为绘制的框的绝对位置
